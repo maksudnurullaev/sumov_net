@@ -1,0 +1,5 @@
+<div class="container">
+ <footer class="bs-docs-footer" style="margin-top: 1px;" role="contentinfo">
+  <p>© <%= substr( scalar localtime, -4) %> <a href="http://sumov.net">Sumov.Net</a></p>
+ </footer>
+</div>

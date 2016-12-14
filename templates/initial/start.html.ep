@@ -1,0 +1,13 @@
+% layout 'default';
+
+<div class="container">
+<div class="jumbotron">
+ <h1><%= ml 'No money?' %></h1>
+ %= tag p => ( class => 'lead' ) => begin
+  %= mlm 'rus', 'Need money content' => begin
+  Мы поможем вам легко и быстро получить кредит. Вам лишь надо вычислить желаемый срок и сумму кредита.
+  % end
+ % end 
+ <p><a class="btn btn-lg btn-success" href="/calculate" role="button"><%= ml 'Calculate' %></a></p>
+</div>
+</div>

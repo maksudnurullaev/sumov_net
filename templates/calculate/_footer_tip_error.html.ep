@@ -1,0 +1,6 @@
+<div class="alert alert-warning" role="alert">
+ %= mlm 'rus', 'Calculate footer tip error' => begin
+<strong>Внимание!</strong> Ошибка ввода, не правильная или некорректная сумма кредита.
+ % end
+</div>
+

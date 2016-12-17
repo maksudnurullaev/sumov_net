@@ -2,14 +2,15 @@
 
 
 <div class="container" style="margin-bottom: 15px">
- %= include 'calculate/_header_tip' ; 
- %= include 'calculate/_header_form' ; 
+ %= include 'calculate/_form_main' ; 
 
  % if( stash('formWithError') ){
-  %= include 'calculate/_footer_tip_error' ; 
+  %= include 'calculate/_tip_with_error' ; 
  % } elsif( stash('creditAmount') ) {
-  %= include 'calculate/_footer_form' ; 
- % } 
+  %= include 'calculate/_form_calculated' ; 
+ % } else {
+  %= include 'calculate/_tip' ; 
+ % }
 </div>
 
 %= tag pre => dumper(stash)

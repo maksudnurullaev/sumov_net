@@ -2,7 +2,7 @@ package Utils::Calculate; {
 
 =encoding utf8
 =head1 NAME
-    Different initial values
+    Different credit calculation routines
 =cut
 
 use 5.012000;
@@ -10,19 +10,18 @@ use strict;
 use warnings;
 use utf8;
 
-my $MinCreditAmount = 100000;
-my $MaxCreditAmount = 10000000;
+use Utils::Credits;
 
 sub validateCreditAmount{
     my $creditAmount = shift;
     $creditAmount =~ s/[\D\s]//g ;
-    return $creditAmount if $creditAmount && $creditAmount >= $MinCreditAmount && $creditAmount <= $MaxCreditAmount;
+    return $creditAmount if $creditAmount && $creditAmount >= $Utils::Credits::MinAmount && $creditAmount <= $Utils::Credits::MaxAmount;
     return undef;
 };
 
 sub credit{
     my ($self,$creditAmount) = @_ ;
-    my $creditRemains = $creditAmount % $MinCreditAmount;
+    my $creditRemains = $creditAmount % $Utils::Credits::MinAmount;
     my $creditMain = $creditAmount - $creditRemains;
     $self->stash( creditRemains => $creditRemains );
     $self->stash( creditMain => $creditMain );

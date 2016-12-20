@@ -13,4 +13,4 @@
  % }
 </div>
 
-%= tag pre => dumper(stash)
+%#= tag pre => dumper(stash)

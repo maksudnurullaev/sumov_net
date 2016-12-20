@@ -1,1 +1,19 @@
-%= tag h1 => 'Footer form' ;
+% use Utils::Credits ;
+% for my $_months (@{$Utils::Credits::Months}) {
+%= tag 'div', class => "col-lg-6" => begin 
+ %= tag 'div', class => "panel panel-default" => begin
+  %= tag 'div', class => "panel-heading" => begin
+  <%= ml 'Credit period' %>: <u><%= $_months %> <%= $_months <= 5 ? ml 'Month' : ml 'Months' %></u>
+  % end
+  %= tag 'div', class => "panel-body" => begin
+  <%= ml 'An initial fee' %>: _1_
+  <br />
+  <%= ml 'Monthly payments' %>: _2_
+  % end
+  %= tag 'div', class => "panel-footer" => begin
+  <button type="button" class="btn btn-primary btn-sm"><%= ml 'Select' %></button>
+  % end
+ % end
+% end
+% }
+

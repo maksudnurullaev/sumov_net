@@ -10,6 +10,8 @@ use strict;
 use warnings;
 use utf8;
 
+use POSIX qw( ceil ) ;
+
 use Utils::Credits;
 
 sub validateCreditAmount{
@@ -20,12 +22,22 @@ sub validateCreditAmount{
 };
 
 sub credit{
-    my ($self,$creditAmount) = @_ ;
-    my $creditRemains = $creditAmount % $Utils::Credits::MinAmount;
-    my $creditMain = $creditAmount - $creditRemains;
-    $self->stash( creditRemains => $creditRemains );
-    $self->stash( creditMain => $creditMain );
+    my ($self,$creditAmount,$months) = @_ ;
+    my $result = { creditAmount => $creditAmount,
+                   months       => $months,
+                   percent      => Utils::Credits::getPersent4Month($months),  
+                   pay_first    => ceil ( $creditAmount * $Utils::Credits::MinPrepayPercent / 100 ),
+                   pay_rest     => -1,
+                   pay_monthly  => -1,
+                   pay_total    => -1,
+                   z_earning    => -1 } ;
+    $result->{pay_rest}    = $creditAmount - $result->{pay_first} ;
+    $result->{pay_total}   = ceil ($result->{pay_rest} + $result->{pay_rest} * $months * $result->{percent} / 100 ) ;
+    #rounding
+    $result->{pay_monthly} = ceil ($result->{pay_total} / $months ) ;
+    $result->{z_earning}   = $result->{pay_total} + $result->{pay_first} - $result->{creditAmount};
 
+    return( $result );
 };
 
 # END OF PACKAGE

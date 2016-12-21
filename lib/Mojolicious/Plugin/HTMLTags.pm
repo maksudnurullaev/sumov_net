@@ -14,6 +14,9 @@ use warnings;
 use utf8;
 use base 'Mojolicious::Plugin';
 use Utils::Languages;
+use Utils::Calculate; 
+use Utils::Currency;
+
 use ML;
 
 our $VERSION        = 'v0.0.1b';
@@ -24,6 +27,9 @@ sub register {
     $app->helper( mlm => sub { ML::process_block (@_); } ); 
 
     $app->helper( languages_current => sub { Utils::Languages::current(@_); } );
+    $app->helper( calculate_credit  => sub { Utils::Calculate::credit(@_); } );
+
+    $app->helper( currency_format => sub { Utils::Currency::format (@_); } );
 };
 
 };

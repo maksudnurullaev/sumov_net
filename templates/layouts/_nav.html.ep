@@ -18,7 +18,7 @@
         % for (sort keys %{$_menus}) {
          % my $_link_name = ml $_menus->{$_}[0];
          % my $_link_link = scalar(@{$_menus->{$_}}) > 1 ? $_menus->{$_}[1] : lc($_menus->{$_}[0]); 
-         %= tag li => (class => ($_link_link eq stash('controller') ? 'active' : '')) => (link_to $_link_name => "/$_link_link" ) ;
+         %= tag li => (class => ($_link_link eq stash('controller') && stash('action') eq 'start' ? 'active' : '')) => (link_to $_link_name => "/$_link_link" ) ;
         % }
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= ucfirst languages_current %><span class="caret"></span></a>

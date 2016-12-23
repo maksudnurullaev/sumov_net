@@ -10,19 +10,19 @@ use strict;
 use warnings;
 use utf8;
 
-our $MinAmount = 100000 ;
-our $MaxAmount = 10000000 ;
-our $MinMonth  = 3 ;
-our $MaxMonth  = 5 ;
+our $MinAmount  = 100000 ;
+our $MaxAmount  = 10000000 ;
+our $MinMonths  = 3 ;
+our $MaxMonths  = 5 ;
 our $MaxPercent = 20 ;
 our $MinPercent = 10 ;
 our $MinPrepayPercent = 10 ;
 
-our $Months    = [$MinMonth..$MaxMonth] ;
+our $Months    = [$MinMonths..$MaxMonths] ;
 
 sub getPersent4Month{
     my $month = shift;
-    return undef if $month < $MinMonth || $month > $MaxMonth ; 
+    return undef if $month < $MinMonths || $month > $MaxMonths ; 
     return ($MaxPercent - $month) ;
 };
 

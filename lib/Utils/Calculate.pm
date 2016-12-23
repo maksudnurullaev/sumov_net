@@ -12,15 +12,6 @@ use utf8;
 
 use POSIX qw( ceil ) ;
 
-use Utils::Credits;
-
-sub validateCreditAmount{
-    my $creditAmount = shift;
-    $creditAmount =~ s/[\D\s]//g ;
-    return $creditAmount if $creditAmount && $creditAmount >= $Utils::Credits::MinAmount && $creditAmount <= $Utils::Credits::MaxAmount;
-    return undef;
-};
-
 sub credit{
     my ($self,$creditAmount,$months) = @_ ;
     my $result = { creditAmount => $creditAmount,

@@ -5,7 +5,7 @@
     <label class="sr-only" for="creditAmount">Amount (in sum)</label>
     <div class="input-group">
       <div class="input-group-addon"><%= ml 'Credit amount' %></div>
-      %= input_tag creditAmount => type => "text", class => 'form-control', id => "creditAmount", placeholder => "Amount";
+      %= input_tag creditAmount => type => "text", class => 'form-control', id => "creditAmount", placeholder => ml('Credit amount') ;
       <div class="input-group-addon">.00</div>
     </div>
   % end 

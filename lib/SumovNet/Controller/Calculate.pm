@@ -18,6 +18,7 @@ sub selected{
 
     if( my $result = Utils::Validators::calculate_selected($self) ){
         $self->app->log->warn("TODO add new record 'user info' with credit wishes");
+        warn Dumper $result;
     }
 };
 

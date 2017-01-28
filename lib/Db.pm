@@ -29,17 +29,19 @@ sub set_production_mode{ $_production_mode = shift; };
 sub get_production_mode{ $_production_mode; };
 
 sub new {
-    my ($class,$c,$prefix) = @_ ;
+    my ($class,$c,$db_file_name) = @_ ;
 
-    if( !$c || !$prefix ){
-        warn "Variables not define properly to create project's database!";
+    if( !$c ){
+        warn "Db::Error: Controller not not defined properly!";
         return(undef);
     }
 
-    my $path = $c->app->home->rel_dir("FILES/$prefix");
-    my $self = bless { c => $c, path => $path, file => "$path/main.db" }, $class ;
+    $db_file_name = 'main.db' if ! defined $db_file_name ;
 
-    return($self);
+    my $path = $c->app->home->rel_file('DATA');
+    my $self = bless { c => $c, path => $path, file => "$path/$db_file_name" }, $class ;
+
+    return ($self);
 };
 
 sub is_valid {
@@ -75,8 +77,8 @@ sub initialize{
     return(1) if( -e $self->{'file'} );
     if( ! -d $self->{path} ){
         system "mkdir -p '" . $self->{path} . "/'" ;
+        return(0) if ! -d $self->{path} ;
     }
-    warn $self->{path};
 
     if($DB_CURRENT_TYPE == $DB_SQLite_TYPE){
         my $connection = $self->get_db_connection() || die "Could not connect to SQLite database";
@@ -741,7 +743,7 @@ sub get_filtered_ids{
         }
 
     }
-    return(keys $temp_hash);
+    return(keys %{$temp_hash});
 };
 
 };

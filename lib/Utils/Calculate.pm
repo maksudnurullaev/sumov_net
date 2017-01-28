@@ -14,6 +14,7 @@ use POSIX qw( ceil ) ;
 
 sub credit{
     my ($self,$creditAmount,$months) = @_ ;
+    $creditAmount =~ s/[\D\s]//g ;
     my $result = { creditAmount => $creditAmount,
                    months       => $months,
                    percent      => Utils::Credits::getPersent4Month($months),  
@@ -26,7 +27,7 @@ sub credit{
     $result->{pay_total}   = ceil ($result->{pay_rest} + $result->{pay_rest} * $months * $result->{percent} / 100 ) ;
     #rounding
     $result->{pay_monthly} = ceil ($result->{pay_total} / $months ) ;
-    $result->{z_earning}   = $result->{pay_total} + $result->{pay_first} - $result->{creditAmount};
+    $result->{z_earning}   = $result->{pay_total} - ($result->{pay_first} + $result->{creditAmount});
 
     return( $result );
 };

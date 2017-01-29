@@ -16,9 +16,9 @@ sub selected{
     my $self = shift;
     return if $self->req->method ne 'POST' ;
 
-    if( my $result = Utils::Validators::calculate_selected($self) ){
-        $self->app->log->warn("TODO add new record 'user info' with credit wishes");
-        warn Dumper $result;
+    if( my $record = Utils::Validators::calculate_selected($self) ){
+        Utils::Calculate::insert_new_client($self,$record);
+        $self->redirect_to('/calculate/finish');
     }
 };
 

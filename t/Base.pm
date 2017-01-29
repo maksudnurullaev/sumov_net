@@ -21,7 +21,7 @@ sub get_test_mojo_session{ Test::Mojo::Session->new('SumovNet'); };
 sub get_test_db{
     my $test_mojo = get_test_mojo();
     my $test_db   = Db->new( $test_mojo, mktemp('tempDbFileXXXXXX') );
-    ok( $test_db->initialize(), 'Test for initialize script!' );
+    ok( $test_db->get_db_connection(), 'Test db connection!' );
     ok( $test_db->is_valid, 'Check database' );
     return( $test_db );
 }

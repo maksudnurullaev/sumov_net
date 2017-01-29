@@ -11,6 +11,8 @@ use warnings;
 use utf8;
 
 use POSIX qw( ceil ) ;
+use Db;
+use Data::Dumper;
 
 sub credit{
     my ($self,$creditAmount,$months) = @_ ;
@@ -30,6 +32,19 @@ sub credit{
     $result->{z_earning}   = $result->{pay_total} - ($result->{pay_first} + $result->{creditAmount});
 
     return( $result );
+};
+
+sub insert_new_client{
+    my ($self,$record) = @_ ;
+    $record->{object_name} = 'client' ;
+    $record->{status} = 'new' ;
+    
+    my $dbh = Db->new($self);
+    $dbh->insert($record);
+   
+    $self->app->log->warn("TODO add new record 'user info' with credit wishes");
+    warn Dumper $record;
+  
 };
 
 # END OF PACKAGE

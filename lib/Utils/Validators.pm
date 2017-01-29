@@ -58,16 +58,16 @@ sub calculate_selected{
 
     # stage I
     if (    !creditAmount($rph->{creditAmount}) 
-         || !creditMonths($rph->{months}) ){
-        $self->app->log->warn("Invalid creditAmount($rph->{creditAmount}) OR months($rph->{months})") ;
+         || !creditMonths($rph->{creditMonths}) ){
+        $self->app->log->warn("Invalid creditAmount($rph->{creditAmount}) OR months($rph->{creditMonths})") ;
         $self->stash( {formWithError => 1} ) ;
         return (undef);
     } else { # stage II
-        $rph->{client_name} = stringVal($rph->{client_name});
-        $rph->{client_phone} =~ s/[\D\s]//g ;
-        if( !$rph->{client_name}  ||
-            !$rph->{client_phone} ||
-            $rph->{client_phone} !~ /^\d{9}$/ ) {
+        $rph->{name} = stringVal($rph->{name});
+        $rph->{phone} =~ s/[\D\s]//g ;
+        if( !$rph->{name}  ||
+            !$rph->{phone} ||
+            $rph->{phone} !~ /^\d{9}$/ ) {
 
             $self->stash( {formWithError => 1} ) ;
             return (undef);

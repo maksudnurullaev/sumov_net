@@ -1,4 +1,4 @@
- % my $_months = param('months') ;
+ % my $_months = param('creditMonths') ;
  % my $_creditAmount = param('creditAmount') ;
  %= tag 'div', class => "panel panel-default" => begin
   %= tag 'div', class => "panel-heading" => begin

@@ -51,18 +51,11 @@ sub is_valid {
 
 sub get_db_connection {
     my $self = shift;
+    $self->initialize();
+
     return $self->{dbh} if exists($self->{dbh}) && defined($self->{dbh}) ;
     if($DB_CURRENT_TYPE == $DB_SQLite_TYPE){
-        my $dbi_connection_string = "dbi:SQLite:dbname=" . $self->{'file'} ;
-        my $dbh = DBI->connect($dbi_connection_string,undef,undef, 
-                   {sqlite_unicode => 1, AutoCommit => 1});
-        if(!defined($dbh)){
-            warn $DBI::errstr;
-            return(undef);
-        }
-        $dbh->do("PRAGMA synchronous = OFF");
-        $self->{dbh} = $dbh ;
-        return($dbh);
+        return( $self->get_sqlite_connection() );
     } elsif ($DB_CURRENT_TYPE == $DB_Pg_TYPE) {
         warn "Error:Pg: Not implemeted yet!";
         return(undef);
@@ -77,26 +70,38 @@ sub initialize{
     return(1) if( -e $self->{'file'} );
     if( ! -d $self->{path} ){
         system "mkdir -p '" . $self->{path} . "/'" ;
-        return(0) if ! -d $self->{path} ;
+        -d $self->{path} || die "Db::initialize:Error: Could not create Db path";
     }
 
     if($DB_CURRENT_TYPE == $DB_SQLite_TYPE){
-        my $connection = $self->get_db_connection() || die "Could not connect to SQLite database";
-        if(defined($connection)){
+        my $dbh = $self->get_sqlite_connection();
+        if(defined($dbh)){
             my @SQLITE_INIT_SQLs = (
                     "CREATE TABLE objects (name TEXT, id TEXT, field TEXT, value TEXT COLLATE NOCASE);",
                     "CREATE INDEX i_objects ON objects (name, id, field COLLATE NOCASE);",
                 );
             for my $sql (@SQLITE_INIT_SQLs){
-                my $stmt = $connection->prepare($sql);
-                $stmt->execute || die "Error:Db: Could not init database with: $sql";
+                my $stmt = $dbh->prepare($sql);
+                $stmt->execute || die "Db::initialize:Error: Could not init database with: $sql";
             }   
             return(1);   
         } 
     } else {
-        warn "Error:DB: Unknown db type!";
+        die "Db::initialize:Error: Db type not implemented yet!";
         return(undef);
     }
+};
+
+sub get_sqlite_connection{
+    my $self = shift;
+
+    my $dbi_connection_string = "dbi:SQLite:dbname=" . $self->{'file'} ;
+    my $dbh = DBI->connect($dbi_connection_string,undef,undef, 
+               {sqlite_unicode => 1, AutoCommit => 1});
+    die $DBI::errstr if !defined($dbh) ;
+
+    $dbh->do("PRAGMA synchronous = OFF");
+    return($dbh);
 };
 
 sub change_name{

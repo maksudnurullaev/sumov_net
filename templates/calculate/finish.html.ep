@@ -1,8 +1,10 @@
 % layout 'default';
 
 <div class="container" style="margin-bottom: 15px">
- %= mlm 'rus', 'Thank you for request' => begin
- Спасибо!<br /> Ваш запрос принят и идет обработка. Мы скоро свяжимся с вами!
- % end
+ <div class="alert alert-success" role="alert">   
+  %= mlm 'rus', 'Thank you for request' => begin
+  <h1>Спасибо!</h1> <p>Ваш запрос принят и идет обработка.</p><p>Мы скоро свяжимся с вами!</p>
+  % end
+ </div> 
 </div> 
 

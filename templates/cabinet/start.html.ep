@@ -1,5 +1,29 @@
 % layout 'default';
 
-<div class="container">
-%= tag h1 => stash('controller') 
+<div class="container" style="margin-bottom: 30px;">
+
+%= tag h2 => ml('Login') ;
+
+%= form_for url_with->path_query => ( method => 'POST' ) => begin
+ % my $_class = stash('formWithError') ? ' has-error' : '' ;
+  %= tag div => class => "form-group $_class" => begin
+    <label for="phone"><%= ml 'Your phone' %></label>
+    <div class="input-group">
+      <div class="input-group-addon">+998</div>
+      %= input_tag phone => type => "number", class => 'form-control', id => "phone", placeholder => ml('Your phone') ;
+    </div>
+  % end 
+  %= tag div => class => "form-group $_class" => begin
+    <label for="password"><%= ml 'Password' %></label>
+      %= input_tag password => type => "password", class => 'form-control', id => "password", placeholder => ml('Password') ;
+  % end 
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" name="check_stay_on"><%= ml 'Remember' %>
+    </label>
+  </div>  
+  <button type="submit" class="btn btn-primary"><%= ml 'Enter' %></button>
+% end
+
+
 </div>
